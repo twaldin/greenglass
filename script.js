@@ -5,6 +5,8 @@ function guess_word(){
   var dictionary = new Typo("en_GB", false, false, { dictionaryPath: "dictionaries" });
   var is_spelled_correctly = dictionary.check(x);
   if (is_spelled_correctly){
+    document.getElementById('spelling').innerHTML = ''
+    window.setTimeout(spelt_right, 400)
     if(x.startsWith('s')){
       window.setTimeout(correct, 400)
     }else{window.setTimeout(wrong, 400)}
