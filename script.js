@@ -2,7 +2,7 @@ function guess_word(){
   document.getElementById('answer').style.backgroundColor='white'
   document.getElementById('spelling').innerHTML = ''
   let x = document.getElementById("guess").value;
-  var dictionary = new Typo("en_GB", false, false, { dictionaryPath: "dictionaries" }),
+  var dictionary = new Typo("en_GB", false, false, { dictionaryPath: "dictionaries" });
   var is_spelled_correctly = dictionary.check(x);
   if (is_spelled_correctly){
     if(x.startsWith('s')){
