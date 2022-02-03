@@ -6,8 +6,7 @@ function guess_word(){
   var is_spelled_correctly = dictionary.check(x);
   if (is_spelled_correctly){
     if(x.startsWith('s')){
-        window.setTimeout(correct, 400)
-      
+      window.setTimeout(correct, 400)
     }else{window.setTimeout(wrong, 400)}
     
   }else{spelt_wrong()}
