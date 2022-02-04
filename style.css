@@ -3,3 +3,32 @@
   width: 100px;
   height: 100px;
 }
+
+.dot{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: green;
+  display: inline-block;
+  margin: 2.5px;
+}
+
+
+.connector_h{
+  height:25px;
+  position: absolute;
+  background-color:green;
+  top: 12.5px;
+  left: 22.5px;
+}
+
+#solution{
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
+  margin-top: 10px;
+  padding: 10px;
+}
