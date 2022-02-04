@@ -8,19 +8,25 @@
   height: 25px;
   width: 25px;
   border-radius: 50%;
-  background-color: green;
+  background-color: blue;
   display: inline-block;
   margin: 2.5px;
+  position: relative;
 }
 
+.row{
+  position: relative;
+}
 
 .connector_h{
   height:25px;
+  width: 0px;
   position: absolute;
-  background-color:green;
-  top: 12.5px;
-  left: 22.5px;
+  background-color:red;
+  top: 2.5px;
+  left: 15px;
 }
+
 
 #solution{
   position: relative;
