@@ -27,7 +27,7 @@ function correct(guess){
   
 function draw_line(len){
   let new_len = parseInt(len)
-  let draw_width = new_len * 27.5
+  let draw_width = (new_len - 1) * 35
   document.getElementById('answer').innerHTML = String(draw_width)
 
   document.getElementById('a1c').style.width = String(draw_width) + 'px'
