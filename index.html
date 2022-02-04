@@ -9,14 +9,14 @@
   <body>
 
     <input type="text" id="guess" name="guess"><br><br>
-    <input type="submit" value="Submit" onclick="guess_word()">
+    <input type="submit" value="Submit" onclick="guess_word(dot_grid)">
 
     <div id ="spelling"></div>
 
     <div id ="answer"></div>
 
     <div id='solution'>
-      <div id='row1'>
+      <div class='row'>
         <span class="dot" id="a1"></span>
         <span class="connector_h" id="a1c"></span>
         <span class="dot" id="a2"></span>
@@ -35,12 +35,163 @@
         <span class="connector_h" id="a8c"></span>
         <span class="dot" id="a9"></span>
       </div>
-      
+      <div class='row'>
+        <span class="dot" id="b1"></span>
+        <span class="connector_h" id="b1c"></span>
+        <span class="dot" id="b2"></span>
+        <span class="connector_h" id="b2c"></span>
+        <span class="dot" id="b3"></span>
+        <span class="connector_h" id="b3c"></span>
+        <span class="dot" id="b4"></span>
+        <span class="connector_h" id="b4c"></span>
+        <span class="dot" id="b5"></span>
+        <span class="connector_h" id="b5c"></span>
+        <span class="dot" id="b6"></span>
+        <span class="connector_h" id="b6c"></span>
+        <span class="dot" id="b7"></span>
+        <span class="connector_h" id="b7c"></span>
+        <span class="dot" id="b8"></span>
+        <span class="connector_h" id="b8c"></span>
+        <span class="dot" id="b9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="c1"></span>
+        <span class="connector_h" id="c1c"></span>
+        <span class="dot" id="c2"></span>
+        <span class="connector_h" id="c2c"></span>
+        <span class="dot" id="c3"></span>
+        <span class="connector_h" id="c3c"></span>
+        <span class="dot" id="c4"></span>
+        <span class="connector_h" id="c4c"></span>
+        <span class="dot" id="c5"></span>
+        <span class="connector_h" id="c5c"></span>
+        <span class="dot" id="c6"></span>
+        <span class="connector_h" id="c6c"></span>
+        <span class="dot" id="c7"></span>
+        <span class="connector_h" id="c7c"></span>
+        <span class="dot" id="c8"></span>
+        <span class="connector_h" id="c8c"></span>
+        <span class="dot" id="c9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="d1"></span>
+        <span class="connector_h" id="d1c"></span>
+        <span class="dot" id="d2"></span>
+        <span class="connector_h" id="d2c"></span>
+        <span class="dot" id="d3"></span>
+        <span class="connector_h" id="d3c"></span>
+        <span class="dot" id="d4"></span>
+        <span class="connector_h" id="d4c"></span>
+        <span class="dot" id="d5"></span>
+        <span class="connector_h" id="d5c"></span>
+        <span class="dot" id="d6"></span>
+        <span class="connector_h" id="d6c"></span>
+        <span class="dot" id="d7"></span>
+        <span class="connector_h" id="d7c"></span>
+        <span class="dot" id="d8"></span>
+        <span class="connector_h" id="d8c"></span>
+        <span class="dot" id="d9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="e1"></span>
+        <span class="connector_h" id="e1c"></span>
+        <span class="dot" id="e2"></span>
+        <span class="connector_h" id="e2c"></span>
+        <span class="dot" id="e3"></span>
+        <span class="connector_h" id="e3c"></span>
+        <span class="dot" id="e4"></span>
+        <span class="connector_h" id="e4c"></span>
+        <span class="dot" id="e5"></span>
+        <span class="connector_h" id="e5c"></span>
+        <span class="dot" id="e6"></span>
+        <span class="connector_h" id="e6c"></span>
+        <span class="dot" id="e7"></span>
+        <span class="connector_h" id="e7c"></span>
+        <span class="dot" id="e8"></span>
+        <span class="connector_h" id="e8c"></span>
+        <span class="dot" id="e9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="f1"></span>
+        <span class="connector_h" id="f1c"></span>
+        <span class="dot" id="f2"></span>
+        <span class="connector_h" id="f2c"></span>
+        <span class="dot" id="f3"></span>
+        <span class="connector_h" id="f3c"></span>
+        <span class="dot" id="f4"></span>
+        <span class="connector_h" id="f4c"></span>
+        <span class="dot" id="f5"></span>
+        <span class="connector_h" id="f5c"></span>
+        <span class="dot" id="f6"></span>
+        <span class="connector_h" id="f6c"></span>
+        <span class="dot" id="f7"></span>
+        <span class="connector_h" id="f7c"></span>
+        <span class="dot" id="f8"></span>
+        <span class="connector_h" id="f8c"></span>
+        <span class="dot" id="f9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="g1"></span>
+        <span class="connector_h" id="g1c"></span>
+        <span class="dot" id="g2"></span>
+        <span class="connector_h" id="g2c"></span>
+        <span class="dot" id="g3"></span>
+        <span class="connector_h" id="g3c"></span>
+        <span class="dot" id="g4"></span>
+        <span class="connector_h" id="g4c"></span>
+        <span class="dot" id="g5"></span>
+        <span class="connector_h" id="g5c"></span>
+        <span class="dot" id="g6"></span>
+        <span class="connector_h" id="g6c"></span>
+        <span class="dot" id="g7"></span>
+        <span class="connector_h" id="g7c"></span>
+        <span class="dot" id="g8"></span>
+        <span class="connector_h" id="g8c"></span>
+        <span class="dot" id="g9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="h1"></span>
+        <span class="connector_h" id="h1c"></span>
+        <span class="dot" id="h2"></span>
+        <span class="connector_h" id="h2c"></span>
+        <span class="dot" id="h3"></span>
+        <span class="connector_h" id="h3c"></span>
+        <span class="dot" id="h4"></span>
+        <span class="connector_h" id="h4c"></span>
+        <span class="dot" id="h5"></span>
+        <span class="connector_h" id="h5c"></span>
+        <span class="dot" id="h6"></span>
+        <span class="connector_h" id="h6c"></span>
+        <span class="dot" id="h7"></span>
+        <span class="connector_h" id="h7c"></span>
+        <span class="dot" id="h8"></span>
+        <span class="connector_h" id="h8c"></span>
+        <span class="dot" id="h9"></span>
+      </div>
+      <div class='row'>
+        <span class="dot" id="i1"></span>
+        <span class="connector_h" id="i1c"></span>
+        <span class="dot" id="i2"></span>
+        <span class="connector_h" id="i2c"></span>
+        <span class="dot" id="i3"></span>
+        <span class="connector_h" id="i3c"></span>
+        <span class="dot" id="i4"></span>
+        <span class="connector_h" id="i4c"></span>
+        <span class="dot" id="i5"></span>
+        <span class="connector_h" id="i5c"></span>
+        <span class="dot" id="i6"></span>
+        <span class="connector_h" id="i6c"></span>
+        <span class="dot" id="i7"></span>
+        <span class="connector_h" id="i7c"></span>
+        <span class="dot" id="i8"></span>
+        <span class="connector_h" id="i8c"></span>
+        <span class="dot" id="i9"></span>
 
+      </div>
     </div>
-
     <script src="script.js"></script>
     <script src="typo.js"></script>
+    <script src="grids.js"></script>
     
     
   </body>
