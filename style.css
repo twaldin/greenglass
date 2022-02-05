@@ -14,7 +14,7 @@
 
 textarea {
     border: none;
-    overflow: auto;
+    overflow: hidden;
     outline: none;
 
     -webkit-box-shadow: none;
@@ -29,13 +29,21 @@ textarea:focus, input:focus{
 #txt{
   visibility:hidden;
   position: absolute;
-  width: 100px;
-  height: 20px;
+  width: 750px;
+  height: 75px;
   resize: none;
+  font-size: 50px;
+  font-family: district-pro, sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 #green_glass{
   position: absolute;
+  font-size: 50px;
+  font-family: district-pro, sans-serif;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .dot{
