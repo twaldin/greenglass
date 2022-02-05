@@ -147,7 +147,7 @@ function dots_h(len, word, status, row, column) { //finds a dot with space for a
       }
 
 
-      document.getElementById(current_dots[draw_column]).style.backgroundColor = color
+      document.getElementById(current_dots[draw_column]).style.backgroundColor = 'transparent'
 
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
       
