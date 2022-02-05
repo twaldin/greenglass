@@ -50,7 +50,15 @@ function onTestChange() {
       return false;
     }
         
+  }
+  if(key === 8){
+    column_guess--
+    current_dot = dot_grid[row_guess][column_guess]
+    console.log(current_dot)
+    document.getElementById(current_dot).style.backgroundColor='transparent'
+    document.getElementById(current_dot).innerHTML=''
   }else{
+    console.log(key)
     let letter = translator[key]
     current_dot = dot_grid[row_guess][column_guess]
     document.getElementById(current_dot).style.backgroundColor='lightgray'
@@ -196,9 +204,9 @@ function lengthen(len, tag) {
   var elem = document.getElementById(String(tag));   
   var current_len = 0;
   clearInterval(id);
-  id = setInterval(frame, 14);
+  id = setInterval(frame, 1);
   function frame() {
-    if (current_len == len) {
+    if (current_len >= len) {
       clearInterval(id);
     } else {
       current_len++; 
