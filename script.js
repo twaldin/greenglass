@@ -1,10 +1,3 @@
-function guess_word(){
-  var invalid_count = 0
-  document.getElementById('answer').style.backgroundColor='white'
-  document.getElementById('spelling').innerHTML = ''
-  let x = document.getElementById("guess").value.toLowerCase();
-}
-
 function word_check(x){
   var dictionary = new Typo("en_GB", false, false, { dictionaryPath: "dictionaries" });
   var is_spelled_correctly = dictionary.check(x);
@@ -25,28 +18,40 @@ function word_check(x){
 }
 
 
-function correct(guess){
-  let width = guess.length;
-  dots_h(width, String(guess), true);
-}
-
 
 let current_dot = ''
 let row_guess=0
 let column_guess = 0
+let start_row = 0
+let start_column = 0
+let offset = 0
+// window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='textarea'){e.preventDefault();return false;}}},true);
+
 function onTestChange() {
   var key = window.event.keyCode;
-
+  if(start_column >0){
+    offset = 4
+  }
   // If the user has pressed enter
   let current_typed_word=document.getElementById('txt').value
   if (key === 13) {
+    event.preventDefault()
+    console.log(current_typed_word[0])
     if(word_check(current_typed_word)){
+      console.log('correct')
       document.getElementById("txt").value = ''
-      dots_h(current_typed_word.length, current_typed_word, true, 0,0)
+      document.getElementById("txt").placeholder = 'Guess Again...'
+      dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column, offset)
+      start_column = column_guess
+      start_row = row_guess
       return false;
     }else{
       document.getElementById("txt").value = ''
-      dots_h(current_typed_word.length, current_typed_word, false, 0,0)
+      document.getElementById("txt").placeholder = 'Guess Again...'
+      console.log(dot_grid[start_row][start_column])
+      dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+      start_column = column_guess
+      start_row = row_guess
       return false;
     }
         
@@ -58,35 +63,18 @@ function onTestChange() {
     document.getElementById(current_dot).style.backgroundColor='transparent'
     document.getElementById(current_dot).innerHTML=''
   }else{
-    console.log(key)
-    let letter = translator[key]
-    current_dot = dot_grid[row_guess][column_guess]
-    document.getElementById(current_dot).style.backgroundColor='lightgray'
-    document.getElementById(current_dot).innerHTML=letter.toUpperCase()
-    column_guess++
-    return true;
+    if(key in translator){
+      console.log(key)
+      let letter = translator[key]
+      current_dot = dot_grid[row_guess][column_guess]
+      document.getElementById(current_dot).style.backgroundColor='lightgray'
+      document.getElementById(current_dot).innerHTML=letter.toUpperCase()
+      column_guess++
+      return true;
+    }
+    
   }
 }
-
-function wrong(guess){
-  let width = guess.length;
-  dots_h(width, String(guess), false);
-
-}
-
-
-
-function spelt_wrong(){
-  document.getElementById('spelling').innerHTML = 'invalid word';
-}
-
-
-
-function spelt_right(){
-  document.getElementById('spelling').innerHTML = 'valid word';
-}
-
-
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -94,12 +82,12 @@ function getRandomInt(max) {
 
 
 
-function dots_h(len, word, status, row, column) { //finds a dot with space for a word horizontally
-  if(invalid_count > 2500){
-    no_space(len);
+function dots_h(len, word, status, row, column, offset) { //finds a dot with space for a word horizontally
+  // if(invalid_count > 2500){
+  //   no_space(len);
 
-  }
-  let color = colors[getRandomInt(4)]
+  // }
+  let color = '#54b948'
 
   // let row = getRandomInt(9)
   // console.log(row)
@@ -122,7 +110,7 @@ function dots_h(len, word, status, row, column) { //finds a dot with space for a
       console.log('invalid '+String(invalid_count))
       invalid_count++
       document.getElementById(dot)
-      dots_h(len, word, status, row, column)
+      dots_h(len, word, status, row, column, offset)
       var current_dots = [];
       break
       
@@ -143,6 +131,8 @@ function dots_h(len, word, status, row, column) { //finds a dot with space for a
       if(draw_column===0){
         document.getElementById(current_dots[draw_column]).style.backgroundColor = 'transparent'
         document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
+        document.getElementById(current_dots[draw_column]).style.color = 'white'
+       
         continue
       }
 
@@ -150,11 +140,12 @@ function dots_h(len, word, status, row, column) { //finds a dot with space for a
       document.getElementById(current_dots[draw_column]).style.backgroundColor = 'transparent'
 
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
+      document.getElementById(current_dots[draw_column]).style.color = 'white'
       
       used_dots.push(current_dots[draw_column])
       
       if(draw_column===(current_dots.length -1)){
-        connect_dots_h(len, row, column, color)
+        connect_dots_h(len, row, column, color, offset)
       }
 
     }else{
@@ -170,9 +161,15 @@ function dots_h(len, word, status, row, column) { //finds a dot with space for a
 }
 
 
-function connect_dots_h(len, row, column, color){
+function connect_dots_h(len, row, column, color, offset){
+  console.log(len)
+  if(len === 1){
+    document.getElementById(dot_grid[row][column]).style.backgroundColor=color
+    console.log(dot_grid[row][column])
+  }
+  console.log(offset)
   let new_len = parseInt(len);
-  let draw_width = (new_len - 1) * 34;
+  let draw_width = ((new_len - 1) * 34);
   let stored_row = con_grid_h[row]
   // console.log(row)
   // console.log(column)
@@ -181,7 +178,7 @@ function connect_dots_h(len, row, column, color){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String(2.5 + (35*column)) + 'px'
+  document.getElementById(String(start_con)).style.left = String(2.5 + (35*column) - offset) + 'px'
   
   draw_width = draw_width + 24
   window.setTimeout(lengthen(draw_width, start_con), 3000)
@@ -196,7 +193,7 @@ function open_box(){
 }
 
 function no_space(len){
-  document.getElementById('space').innerHTML = 'no space for ' + String(len) + ' letter word'
+  document.getElementById('space').innerHTML = 'no space for ' + String(len - 1) + ' letter word'
 }
 
 var id = null;
