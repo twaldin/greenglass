@@ -1,5 +1,3 @@
-
-
 var translator = {
   65:'a',
   66:'b',
