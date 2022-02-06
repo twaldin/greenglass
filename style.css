@@ -88,6 +88,15 @@ body{
   border-radius: 12.5px;
 }
 
+.connector_v{
+  height:25px;
+  width: 25px;
+  position: absolute;
+  background-color:transparent;
+  top: 0px;
+  left: 0px;
+  border-radius: 12.5px;
+}
 
 #solution{
   position: relative;

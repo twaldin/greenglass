@@ -25,6 +25,9 @@ let column_guess = 0
 let start_row = 0
 let start_column = 0
 let offset = 0
+let typed_dots = []
+let vertical = false
+let trash = []
 // window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='textarea'){e.preventDefault();return false;}}},true);
 
 function onTestChange() {
@@ -35,13 +38,18 @@ function onTestChange() {
   // If the user has pressed enter
   let current_typed_word=document.getElementById('txt').value
   if (key === 13) {
+    typed_dots = []
     event.preventDefault()
     console.log(current_typed_word[0])
     if(word_check(current_typed_word)){
       console.log('correct')
       document.getElementById("txt").value = ''
       document.getElementById("txt").placeholder = 'Guess Again...'
-      dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column, offset)
+      if(vertical){
+        dots_v(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
+      }else{
+        dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
+      }
       start_column = column_guess
       start_row = row_guess
       return false;
@@ -55,30 +63,76 @@ function onTestChange() {
       return false;
     }
         
-  }
-  if(key === 8){
-    column_guess--
-    current_dot = dot_grid[row_guess][column_guess]
-    console.log(current_dot)
-    document.getElementById(current_dot).style.backgroundColor='transparent'
-    document.getElementById(current_dot).innerHTML=''
+  }if(key === 8){
+    // console.log(Object.values(translator))
+    let old = typed_dots.pop()
+    if(Object.values(translator).includes((document.getElementById(old).innerHTML).toLowerCase())){
+      console.log(typed_dots)
+      if(vertical && typed_dots.length > 0){
+        typed_dots.push(old)
+        console.log('hello')
+        row_guess--
+      }else if(typed_dots.length > 0){
+        typed_dots.push(old)
+        console.log('hello')
+        column_guess--
+      }
+      current_dot = typed_dots[typed_dots.indexOf(dot_grid[row_guess][column_guess])]
+      document.getElementById(current_dot).style.backgroundColor='transparent'
+      document.getElementById(current_dot).innerHTML=''
+    }
+    
+    
+    
+
   }else{
     if(key in translator){
-      console.log(key)
       let letter = translator[key]
+      current_dot = dot_grid[row_guess][column_guess]
+      if(dot_grid[row_guess].includes(current_dot) === false){
+        row_guess = start_row+1
+        column_guess = start_column
+        vertical = true
+       
+        document.getElementById(dot_grid[row_guess][column_guess-1]).style.backgroundColor='transparent'
+        document.getElementById(dot_grid[row_guess][column_guess-1]).innerHTML=''
+        for(let tick = 1; tick<typed_dots.length;tick++){
+          current_dot = dot_grid[row_guess][column_guess]
+          document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
+          document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor 
+          document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
+          document.getElementById(typed_dots[tick]).innerHTML=''
+          
+          
+          row_guess++
+          
+
+        }
+      }
+      
       current_dot = dot_grid[row_guess][column_guess]
       document.getElementById(current_dot).style.backgroundColor='lightgray'
       document.getElementById(current_dot).innerHTML=letter.toUpperCase()
-      column_guess++
+      typed_dots.push(current_dot)
+      
+        
+      if(vertical){
+        row_guess++
+      }else{
+        column_guess++
+      }
       return true;
     }
+    }
     
-  }
 }
+
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
+
+
 
 
 
@@ -160,6 +214,112 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
   }
 }
 
+function dots_v(len, word, status, row, column, offset) { //finds a dot with space for a word horizontally
+  // if(invalid_count > 2500){
+  //   no_space(len);
+
+  // }
+  let color = '#54b948'
+
+  // let row = getRandomInt(9)
+  // console.log(row)
+  // let row = 0
+  // let column = getRandomInt(10-parseInt(len))
+  // let column = 0
+  // console.log(row)
+  // console.log(column)
+  let dot = dot_grid[row][column]
+  // console.log(dot)
+  
+  
+  
+  var current_dots = [];
+  for(let current_row = row; current_row < row+parseInt(len); current_row++){
+
+    
+    let dot = dot_grid[current_row][column];
+    if(used_dots.includes(dot)){
+      console.log('invalid '+String(invalid_count))
+      invalid_count++
+      document.getElementById(dot)
+      dots_v(len, word, status, row, column, offset)
+      var current_dots = [];
+      break
+      
+    }
+    
+    current_dots.push(dot);
+    
+    // console.log(current_dots);
+    
+  }
+
+  
+
+  // console.log(used_dots)
+  for(let draw_row = 0; draw_row < current_dots.length; draw_row++ ){
+    if(status){
+
+      if(draw_row===0){
+        document.getElementById(current_dots[draw_row]).style.backgroundColor = 'transparent'
+        document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
+        document.getElementById(current_dots[draw_row]).style.color = 'white'
+       
+        continue
+      }
+
+
+      document.getElementById(current_dots[draw_row]).style.backgroundColor = 'transparent'
+
+      document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
+      document.getElementById(current_dots[draw_row]).style.color = 'white'
+      
+      used_dots.push(current_dots[draw_row])
+      
+      if(draw_row===(current_dots.length -1)){
+        connect_dots_v(len, row, column, color, offset)
+      }
+
+    }else{
+      color='gray'
+      document.getElementById(current_dots[draw_row]).style.backgroundColor = color
+      console.log(word)
+      document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
+
+      used_dots.push(current_dots[draw_row])
+      
+    } 
+  }
+}
+
+function connect_dots_v(len, row, column, color, offset){
+  console.log(len)
+  if(len === 1){
+    document.getElementById(dot_grid[row][column]).style.backgroundColor=color
+    console.log(dot_grid[row][column])
+  }
+  console.log(offset)
+  let new_len = parseInt(len);
+  let draw_height = ((new_len - 1) * 34);
+  // console.log(row)
+  // console.log(column)
+  // console.log(stored_row[column])
+  let start_con = con_grid_v[column][row]
+
+  document.getElementById(String(start_con)).style.backgroundColor = color
+  
+  // document.getElementById(String(start_con)).style.left = String(2.5 + (35*dot_grid[row].indexOf(dot_grid[row][column]) - offset)) + 'px'
+
+  document.getElementById(String(start_con)).style.top = ''
+
+  
+  
+  draw_height = draw_height + 12
+  window.setTimeout(tallen(draw_height, start_con), 3000)
+  
+  
+  
+}
 
 function connect_dots_h(len, row, column, color, offset){
   console.log(len)
@@ -212,6 +372,22 @@ function lengthen(len, tag) {
   }
 }
 
+var id2 = null;
+function tallen(len, tag) {
+  var elem = document.getElementById(String(tag));   
+  var current_len = 0;
+  clearInterval(id2);
+  id2 = setInterval(frame, 1);
+  function frame() {
+    if (current_len >= len) {
+      clearInterval(id2);
+    } else {
+      current_len++; 
+      elem.style.height = current_len + 'px';
+    }
+  }
+}
+
 var colors = ['red', 'orange', 'yellow', 'green', 'purple'];
 var used_dots = [];
 var invalid_count = 0
@@ -226,6 +402,17 @@ var con_grid_h = [
   ['g1c', 'g2c', 'g3c', 'g4c', 'g5c','g6c', 'g7c', 'g8c'], //r7
   ['h1c', 'h2c', 'h3c', 'h4c', 'h5c','h6c', 'h7c', 'h8c'], //r8
   ['i1c', 'i2c', 'i3c', 'i4c', 'i5c','i6c', 'i7c', 'i8c'] //r9
+];
+
+var con_grid_v = [
+  ['a1c', 'a2c', 'a3c', 'a4c', 'a5c','a6c', 'a7c', 'a8c', 'a9c'], //r1
+  ['b1c', 'b2c', 'b3c', 'b4c', 'b5c','b6c', 'b7c', 'b8c', 'b9c'], //r2
+  ['c1c', 'c2c', 'c3c', 'c4c', 'c5c','c6c', 'c7c', 'c8c', 'c9c'], //r3
+  ['d1c', 'd2c', 'd3c', 'd4c', 'd5c','d6c', 'd7c', 'd8c', 'd9c'], //r4
+  ['e1c', 'e2c', 'e3c', 'e4c', 'e5c','e6c', 'e7c', 'e8c', 'e9c'], //r5
+  ['f1c', 'f2c', 'f3c', 'f4c', 'f5c','f6c', 'f7c', 'f8c', 'f9c'], //r6
+  ['g1c', 'g2c', 'g3c', 'g4c', 'g5c','g6c', 'g7c', 'g8c', 'g9c'], //r7
+  ['h1c', 'h2c', 'h3c', 'h4c', 'h5c','h6c', 'h7c', 'h8c', 'h9c'] //r8
 ];
 
 
