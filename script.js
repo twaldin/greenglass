@@ -31,6 +31,7 @@ let trash = []
 // window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='textarea'){e.preventDefault();return false;}}},true);
 
 function onTestChange() {
+  
   var key = window.event.keyCode;
   if(start_column >0){
     offset = 4
@@ -38,6 +39,7 @@ function onTestChange() {
   // If the user has pressed enter
   let current_typed_word=document.getElementById('txt').value
   if (key === 13) {
+    
     typed_dots = []
     event.preventDefault()
     console.log(current_typed_word[0])
@@ -47,6 +49,7 @@ function onTestChange() {
       document.getElementById("txt").placeholder = 'Guess Again...'
       if(vertical){
         dots_v(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
+        vertical = false
       }else{
         dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
       }
@@ -57,7 +60,12 @@ function onTestChange() {
       document.getElementById("txt").value = ''
       document.getElementById("txt").placeholder = 'Guess Again...'
       console.log(dot_grid[start_row][start_column])
-      dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+      if(vertical){
+        dots_v(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+      }else{ 
+        dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+      }
+      
       start_column = column_guess
       start_row = row_guess
       return false;
@@ -308,7 +316,7 @@ function connect_dots_v(len, row, column, color, offset){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  // document.getElementById(String(start_con)).style.left = String(2.5 + (35*dot_grid[row].indexOf(dot_grid[row][column]) - offset)) + 'px'
+  document.getElementById(String(start_con)).style.left = String(2.5 + (35*dot_grid[row].indexOf(dot_grid[row][column]) - offset)) + 'px'
 
   document.getElementById(String(start_con)).style.top = ''
 
