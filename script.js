@@ -33,105 +33,105 @@ let trash = []
 function onTestChange() {
   
   var key = window.event.keyCode;
-  if(start_column >0){
+  if(start_column >0 || start_row>0){
     offset = 4
   }
   // If the user has pressed enter
   let current_typed_word=document.getElementById('txt').value
-  if (key === 13) {
-    
-    typed_dots = []
+  if((key > 64 && key < 91 || key === 13 || key === 8) === false){
     event.preventDefault()
-    console.log(current_typed_word[0])
-    if(word_check(current_typed_word)){
-      console.log('correct')
-      document.getElementById("txt").value = ''
-      document.getElementById("txt").placeholder = 'Guess Again...'
-      if(vertical){
-        dots_v(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
-        vertical = false
-      }else{
-        dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
-      }
-      start_column = column_guess
-      start_row = row_guess
-      return false;
-    }else{
-      document.getElementById("txt").value = ''
-      document.getElementById("txt").placeholder = 'Guess Again...'
-      console.log(dot_grid[start_row][start_column])
-      if(vertical){
-        dots_v(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
-      }else{ 
-        dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
-      }
+  }
+    if (key === 13) {
       
-      start_column = column_guess
-      start_row = row_guess
-      return false;
-    }
-        
-  }if(key === 8){
-    // console.log(Object.values(translator))
-    let old = typed_dots.pop()
-    if(Object.values(translator).includes((document.getElementById(old).innerHTML).toLowerCase())){
-      console.log(typed_dots)
-      if(vertical && typed_dots.length > 0){
-        typed_dots.push(old)
-        console.log('hello')
-        row_guess--
-      }else if(typed_dots.length > 0){
-        typed_dots.push(old)
-        console.log('hello')
-        column_guess--
-      }
-      current_dot = typed_dots[typed_dots.indexOf(dot_grid[row_guess][column_guess])]
-      document.getElementById(current_dot).style.backgroundColor='transparent'
-      document.getElementById(current_dot).innerHTML=''
-    }
-    
-    
-    
-
-  }else{
-    if(key in translator){
-      let letter = translator[key]
-      current_dot = dot_grid[row_guess][column_guess]
-      if(dot_grid[row_guess].includes(current_dot) === false){
-        row_guess = start_row+1
-        column_guess = start_column
-        vertical = true
-       
-        document.getElementById(dot_grid[row_guess][column_guess-1]).style.backgroundColor='transparent'
-        document.getElementById(dot_grid[row_guess][column_guess-1]).innerHTML=''
-        for(let tick = 1; tick<typed_dots.length;tick++){
-          current_dot = dot_grid[row_guess][column_guess]
-          document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
-          document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor 
-          document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
-          document.getElementById(typed_dots[tick]).innerHTML=''
-          
-          
-          row_guess++
-          
-
+      typed_dots = []
+      event.preventDefault()
+      console.log(current_typed_word[0])
+      if(word_check(current_typed_word)){
+        console.log('correct')
+        document.getElementById("txt").value = ''
+        document.getElementById("txt").placeholder = 'Guess Again...'
+        if(vertical){
+          dots_v(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
+          vertical = false
+        }else{
+          dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
         }
-      }
-      
-      current_dot = dot_grid[row_guess][column_guess]
-      document.getElementById(current_dot).style.backgroundColor='lightgray'
-      document.getElementById(current_dot).innerHTML=letter.toUpperCase()
-      typed_dots.push(current_dot)
-      
-        
-      if(vertical){
-        row_guess++
+        start_column = column_guess
+        start_row = row_guess
+        return false;
       }else{
-        column_guess++
+        document.getElementById("txt").value = ''
+        document.getElementById("txt").placeholder = 'Guess Again...'
+        console.log(dot_grid[start_row][start_column])
+        if(vertical){
+          dots_v(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+        }else{ 
+          dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+        }
+        
+        start_column = column_guess
+        start_row = row_guess
+        return false;
       }
-      return true;
+          
+    }if(key === 8){
+        console.log(typed_dots)
+        if(vertical && typed_dots.length > 0){
+          console.log('hello')
+          row_guess--
+        }else if(typed_dots.length > 0){
+          console.log('hello')
+          column_guess--
+        }
+        current_dot = typed_dots[typed_dots.indexOf(dot_grid[row_guess][column_guess])]
+        typed_dots.pop(typed_dots.indexOf(dot_grid[row_guess][column_guess]))
+        document.getElementById(current_dot).style.backgroundColor='transparent'
+        document.getElementById(current_dot).innerHTML=''
+      // }
+      
+      
+      
+
+    }else{
+      if(key in translator){
+        let letter = translator[key]
+        current_dot = dot_grid[row_guess][column_guess]
+        if(dot_grid[row_guess].includes(current_dot) === false){
+          row_guess = start_row+1
+          column_guess = start_column
+          vertical = true
+        
+          document.getElementById(dot_grid[row_guess][column_guess-1]).style.backgroundColor='transparent'
+          document.getElementById(dot_grid[row_guess][column_guess-1]).innerHTML=''
+          for(let tick = 1; tick<typed_dots.length;tick++){
+            current_dot = dot_grid[row_guess][column_guess]
+            document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
+            document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor 
+            document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
+            document.getElementById(typed_dots[tick]).innerHTML=''
+            
+            
+            row_guess++
+            
+
+          }
+        }
+        
+        current_dot = dot_grid[row_guess][column_guess]
+        document.getElementById(current_dot).style.backgroundColor='lightgray'
+        document.getElementById(current_dot).innerHTML=letter.toUpperCase()
+        typed_dots.push(current_dot)
+        
+          
+        if(vertical){
+          row_guess++
+        }else{
+          column_guess++
+        }
+        return true;
     }
     }
+  
     
 }
 
@@ -316,9 +316,9 @@ function connect_dots_v(len, row, column, color, offset){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String(2.5 + (35*dot_grid[row].indexOf(dot_grid[row][column]) - offset)) + 'px'
+  document.getElementById(String(start_con)).style.left = String(2+(35*dot_grid[row].indexOf(dot_grid[row][column]) - offset)) + 'px'
 
-  document.getElementById(String(start_con)).style.top = ''
+  document.getElementById(String(start_con)).style.top = String(5 + (35*row) - 2*offset) + 'px'
 
   
   
@@ -347,6 +347,9 @@ function connect_dots_h(len, row, column, color, offset){
   document.getElementById(String(start_con)).style.backgroundColor = color
   
   document.getElementById(String(start_con)).style.left = String(2.5 + (35*column) - offset) + 'px'
+
+  
+  document.getElementById(String(start_con)).style.top = String(2.5 + (31*dot_grid.indexOf(dot_grid[row]) - 1-offset)) + 'px'
   
   draw_width = draw_width + 24
   window.setTimeout(lengthen(draw_width, start_con), 3000)
