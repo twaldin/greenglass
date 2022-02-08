@@ -7,17 +7,17 @@ function word_check(x){
     // document.getElementById('spelling').innerHTML = ''
     // window.setTimeout(spelt_right, 400);
 
-    if(x.startsWith('s')){
+    if(x.startsWith('s') || x.startsWith('S')){
       return true
     }else{
       // window.setTimeout(wrong(x), 400)
       return false
     }
     
-  }else{spelt_wrong()}
+  }else{
+    return null
+  }
 }
-
-
 
 let current_dot = ''
 let row_guess=0
@@ -31,49 +31,106 @@ let trash = []
 // window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='textarea'){e.preventDefault();return false;}}},true);
 
 function onTestChange() {
-  
+  offset = 0
   var key = window.event.keyCode;
-  if(start_column >0 || start_row>0){
-    offset = 4
-  }
+  
   // If the user has pressed enter
   let current_typed_word=document.getElementById('txt').value
   if((key > 64 && key < 91 || key === 13 || key === 8) === false){
     event.preventDefault()
   }
     if (key === 13) {
-      
-      typed_dots = []
+      // document.getElementById('txt').maxLength = String(9-(row_guess)+1)
       event.preventDefault()
       console.log(current_typed_word[0])
       if(word_check(current_typed_word)){
+        typed_dots = []
         console.log('correct')
         document.getElementById("txt").value = ''
         document.getElementById("txt").placeholder = 'Guess Again...'
         if(vertical){
           dots_v(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
+          console.log(start_row, start_column)
           vertical = false
+          column_guess = start_column+1
+          row_guess = start_row
+          if(dot_grid[row_guess].includes(dot_grid[row_guess][column_guess]) === false){
+            row_guess+=1
+            column_guess = find_in_row(row_guess)
+          }
+          if(used_dots.includes(dot_grid[row_guess][column_guess])){
+            console.log('detects')
+            column_guess = find_next(row_guess, column_guess)
+          }
         }else{
           dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
+          console.log(start_row, start_column)
+          if(dot_grid[row_guess].includes(dot_grid[row_guess][column_guess]) === false){
+            row_guess+=1
+            column_guess = find_in_row(row_guess)
+          }
+          if(used_dots.includes(dot_grid[row_guess][column_guess])){
+            console.log('detects')
+            column_guess = find_next(row_guess, column_guess)
+          }
         }
         start_column = column_guess
         start_row = row_guess
         return false;
-      }else{
+      }else if(word_check(current_typed_word) === false){
+        typed_dots = []
         document.getElementById("txt").value = ''
         document.getElementById("txt").placeholder = 'Guess Again...'
-        console.log(dot_grid[start_row][start_column])
         if(vertical){
+          
           dots_v(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
-        }else{ 
+          vertical = false
+          column_guess = start_column+1
+          row_guess = start_row 
+
+          if(dot_grid[row_guess].includes(dot_grid[row_guess][column_guess]) === false){
+            row_guess+=1
+            column_guess = find_in_row(row_guess)
+          }
+          if(used_dots.includes(dot_grid[row_guess][column_guess])){
+            console.log('detects')
+            column_guess = find_next(row_guess, column_guess)
+          }
+        }else{
           dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
+          console.log(start_row, start_column)
+          if(dot_grid[row_guess].includes(dot_grid[row_guess][column_guess]) === false){
+            row_guess+=1
+            column_guess = find_in_row(row_guess)
+          }
+          if(used_dots.includes(dot_grid[row_guess][column_guess])){
+            console.log('detects')
+            column_guess = find_next(row_guess, column_guess)
+          }
         }
         
-        start_column = column_guess
+        start_column = column_guess+1
         start_row = row_guess
         return false;
+      }else if(word_check(current_typed_word)===null){
+        document.getElementById("txt").value = ''
+        document.getElementById("txt").placeholder = 'Not in Word List, Guess Again...'
+        for(let count=0; count<typed_dots.length;count++){
+          if(count===0){
+            column_guess = dot_grid[row_guess].indexOf(typed_dots[count])
+          }
+          if(used_dots.includes(typed_dots[count])){
+            // used_dots.slice(used_dots.indexOf(typed_dots[count]))
+          }
+          console.log(typed_dots)
+          document.getElementById(typed_dots[count]).innerHTML = ''
+          document.getElementById(typed_dots[count]).style.backgroundColor = 'transparent'
+        }
+       
       }
-          
+      
+      
+      
     }if(key === 8){
         console.log(typed_dots)
         if(vertical && typed_dots.length > 0){
@@ -93,46 +150,70 @@ function onTestChange() {
       
 
     }else{
-      if(key in translator){
-        let letter = translator[key]
-        current_dot = dot_grid[row_guess][column_guess]
-        if(dot_grid[row_guess].includes(current_dot) === false){
-          row_guess = start_row+1
-          column_guess = start_column
-          vertical = true
-        
-          document.getElementById(dot_grid[row_guess][column_guess-1]).style.backgroundColor='transparent'
-          document.getElementById(dot_grid[row_guess][column_guess-1]).innerHTML=''
-          for(let tick = 1; tick<typed_dots.length;tick++){
-            current_dot = dot_grid[row_guess][column_guess]
-            document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
-            document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor 
-            document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
-            document.getElementById(typed_dots[tick]).innerHTML=''
-            
-            
-            row_guess++
-            
-
-          }
-        }
-        
-        current_dot = dot_grid[row_guess][column_guess]
-        document.getElementById(current_dot).style.backgroundColor='lightgray'
-        document.getElementById(current_dot).innerHTML=letter.toUpperCase()
-        typed_dots.push(current_dot)
-        
+      if(current_typed_word.length===9){
+        event.preventDefault()
+        return
+      }
+        if(key in translator){
+          let letter = translator[key]
+          current_dot = dot_grid[row_guess][column_guess]
+          if(dot_grid[row_guess].includes(current_dot) === false || used_dots.includes(current_dot)){
+            row_guess = start_row+1
+            column_guess = start_column
+            vertical = true
           
-        if(vertical){
-          row_guess++
-        }else{
-          column_guess++
-        }
-        return true;
-    }
+            document.getElementById(dot_grid[row_guess][column_guess-1]).style.backgroundColor='transparent'
+            document.getElementById(dot_grid[row_guess][column_guess-1]).innerHTML=''
+            for(let tick = 1; tick<typed_dots.length;tick++){
+              current_dot = dot_grid[row_guess][column_guess]
+              document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
+              document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor
+              document.getElementById(current_dot).style.top= String(33*row_guess)+'px'  
+              document.getElementById(current_dot).style.left= String(33*dot_grid[row_guess].indexOf(current_dot))+'px' 
+              document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
+              document.getElementById(typed_dots[tick]).innerHTML=''
+              
+              
+              row_guess++
+              
+
+            }
+          }
+          
+          current_dot = dot_grid[row_guess][column_guess]
+          document.getElementById(current_dot).style.backgroundColor='lightgray'
+          document.getElementById(current_dot).style.left= String(33*dot_grid[row_guess].indexOf(current_dot))+'px'
+          document.getElementById(current_dot).style.top= String(33*row_guess)+'px'  
+          document.getElementById(current_dot).innerHTML=letter.toUpperCase()
+          typed_dots.push(current_dot)
+          
+            
+          if(vertical){
+            row_guess++
+          }else{
+            column_guess++
+          }
+          return true;
+      }
     }
   
-    
+  
+}
+
+function find_in_row(row){
+  for(let count=0; count < dot_grid[row].length; count++){
+    if(used_dots.includes(dot_grid[row][count])===false){
+      return count
+    }
+  }
+}
+
+function find_next(row, column){
+  for(let count=column; count < dot_grid[row].length; count++){
+    if(used_dots.includes(dot_grid[row][count])===false){
+      return count
+    }
+  }
 }
 
 
@@ -191,10 +272,10 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
     if(status){
 
       if(draw_column===0){
-        document.getElementById(current_dots[draw_column]).style.backgroundColor = 'transparent'
+        document.getElementById(current_dots[draw_column]).style.backgroundColor = color
         document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
         document.getElementById(current_dots[draw_column]).style.color = 'white'
-       
+        document.getElementById(current_dots[draw_column]).style.left = String(dot_grid[row].indexOf(current_dots[draw_column]) * 33) +'px'
         continue
       }
 
@@ -203,17 +284,19 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
 
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
       document.getElementById(current_dots[draw_column]).style.color = 'white'
+      document.getElementById(current_dots[draw_column]).style.left = String(dot_grid[row].indexOf(current_dots[draw_column]) * 33) +'px'
       
       used_dots.push(current_dots[draw_column])
       
       if(draw_column===(current_dots.length -1)){
         connect_dots_h(len, row, column, color, offset)
+        document.getElementById(current_dots[draw_column]).style.backgroundColor = color
       }
 
     }else{
       color='gray'
+      document.getElementById(current_dots[draw_column]).style.color = 'white'
       document.getElementById(current_dots[draw_column]).style.backgroundColor = color
-      console.log(word)
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
 
       used_dots.push(current_dots[draw_column])
@@ -269,7 +352,7 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
     if(status){
 
       if(draw_row===0){
-        document.getElementById(current_dots[draw_row]).style.backgroundColor = 'transparent'
+        document.getElementById(current_dots[draw_row]).style.backgroundColor = color
         document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
         document.getElementById(current_dots[draw_row]).style.color = 'white'
        
@@ -285,7 +368,8 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
       used_dots.push(current_dots[draw_row])
       
       if(draw_row===(current_dots.length -1)){
-        connect_dots_v(len, row, column, color, offset)
+        connect_dots_v(len, row, column, color, offset)   
+        document.getElementById(current_dots[draw_row]).style.backgroundColor = color
       }
 
     }else{
@@ -308,7 +392,7 @@ function connect_dots_v(len, row, column, color, offset){
   }
   console.log(offset)
   let new_len = parseInt(len);
-  let draw_height = ((new_len - 1) * 34);
+  let draw_height = ((new_len) * 31);
   // console.log(row)
   // console.log(column)
   // console.log(stored_row[column])
@@ -316,13 +400,13 @@ function connect_dots_v(len, row, column, color, offset){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String(2+(35*dot_grid[row].indexOf(dot_grid[row][column]) - offset)) + 'px'
+  document.getElementById(String(start_con)).style.left = String(33*dot_grid[row].indexOf(dot_grid[row][column])) + 'px'
 
-  document.getElementById(String(start_con)).style.top = String(5 + (35*row) - 2*offset) + 'px'
+  document.getElementById(String(start_con)).style.top = String((33*row)) + 'px'
 
   
   
-  draw_height = draw_height + 12
+  draw_height = draw_height
   window.setTimeout(tallen(draw_height, start_con), 3000)
   
   
@@ -337,7 +421,7 @@ function connect_dots_h(len, row, column, color, offset){
   }
   console.log(offset)
   let new_len = parseInt(len);
-  let draw_width = ((new_len - 1) * 34);
+  let draw_width = ((new_len) * 31);
   let stored_row = con_grid_h[row]
   // console.log(row)
   // console.log(column)
@@ -346,12 +430,12 @@ function connect_dots_h(len, row, column, color, offset){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String(2.5 + (35*column) - offset) + 'px'
+  document.getElementById(String(start_con)).style.left = String((33*column)) + 'px'
 
   
-  document.getElementById(String(start_con)).style.top = String(2.5 + (31*dot_grid.indexOf(dot_grid[row]) - 1-offset)) + 'px'
+  document.getElementById(String(start_con)).style.top = String((33*dot_grid.indexOf(dot_grid[row]))) + 'px'
   
-  draw_width = draw_width + 24
+  draw_width = draw_width
   window.setTimeout(lengthen(draw_width, start_con), 3000)
   
   

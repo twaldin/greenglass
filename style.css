@@ -54,12 +54,11 @@ body{
   height: 25px;
   width: 25px;
   border-radius: 50%;
-  background-color: blue;
+  background-color: transparent;
   display: inline-block;
-  position: relative;
+  position: absolute;
   text-align: center;
   vertical-align: top;
-  margin: 2.5px;
   font-size: 16px;
   font-family: district-pro, sans-serif;
   font-weight: 600;
@@ -105,8 +104,5 @@ body{
   position: relative;
   width: 303px;
   height: 100%;
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
   margin-top: 10px;
 }
