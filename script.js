@@ -119,6 +119,7 @@ function onTestChange() {
           document.getElementById(typed_dots[count]).innerHTML = ''
           document.getElementById(typed_dots[count]).style.backgroundColor = 'transparent'
         }
+        typed_dots = []
       }
       
       
