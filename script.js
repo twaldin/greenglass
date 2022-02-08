@@ -384,7 +384,7 @@ function connect_dots_v(len, row, column, color, offset){
   // console.log(row)
   // console.log(column)
   // console.log(stored_row[column])
-  let start_con = con_grid_v[column][row]
+  let start_con = con_grid_v[row][column]
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
