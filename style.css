@@ -16,7 +16,9 @@ textarea {
     border: none;
     overflow: hidden;
     outline: none;
-
+    position: absolute;
+    top: 12px;
+    left: 0px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
@@ -28,6 +30,28 @@ textarea:focus, input:focus{
 
 body{
   background-color: white;
+}
+#top{
+  width:50%;
+  height: 100px;
+}
+
+#points{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #54b948;
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+  vertical-align: top;
+  bottom: 25px;
+  right:0px;
+  font-family: district-pro, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  color: white;
+  font-size:36px;
 }
 
 #txt{
@@ -48,6 +72,8 @@ body{
   font-family: district-pro, sans-serif;
   font-weight: 600;
   font-style: normal;
+  top: 12px;
+  left:0px;
 }
 
 .dot{

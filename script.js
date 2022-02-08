@@ -40,6 +40,7 @@ function onTestChange() {
     event.preventDefault()
   }
     if (key === 13) {
+      
       // document.getElementById('txt').maxLength = String(9-(row_guess)+1)
       event.preventDefault()
       console.log(current_typed_word[0])
@@ -72,6 +73,7 @@ function onTestChange() {
         }
         start_column = column_guess
         start_row = row_guess
+        document.getElementById('points').innerHTML=String(used_dots.length)
         return false;
       }else if(word_check(current_typed_word) === false){
         typed_dots = []
@@ -104,6 +106,7 @@ function onTestChange() {
         
         start_column = column_guess
         start_row = row_guess
+        document.getElementById('points').innerHTML=String(used_dots.length)
         return false;
       }else if(word_check(current_typed_word)===null){
         document.getElementById("txt").value = ''
@@ -119,7 +122,7 @@ function onTestChange() {
       }
       
       
-      
+    
     }if(key === 8){
         console.log(typed_dots)
         if(vertical && typed_dots.length > 0){
@@ -264,6 +267,8 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
         document.getElementById(current_dots[draw_column]).style.backgroundColor = color
         document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
         document.getElementById(current_dots[draw_column]).style.color = 'white'
+      
+        used_dots.push(current_dots[draw_column])
         continue
       }
 
@@ -342,6 +347,8 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
         document.getElementById(current_dots[draw_row]).style.backgroundColor = color
         document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
         document.getElementById(current_dots[draw_row]).style.color = 'white'
+      
+        used_dots.push(current_dots[draw_column])
        
         continue
       }
@@ -433,10 +440,6 @@ function connect_dots_h(len, row, column, color, offset){
 function open_box(){
   document.getElementById('txt').style.visibility = 'visible'
   console.log('works')
-}
-
-function no_space(len){
-  document.getElementById('space').innerHTML = 'no space for ' + String(len - 1) + ' letter word'
 }
 
 var id = null;
