@@ -45,12 +45,10 @@ function onTestChange() {
       console.log(current_typed_word[0])
       if(word_check(current_typed_word)){
         typed_dots = []
-        console.log('correct')
         document.getElementById("txt").value = ''
         document.getElementById("txt").placeholder = 'Guess Again...'
         if(vertical){
           dots_v(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
-          console.log(start_row, start_column)
           vertical = false
           column_guess = start_column+1
           row_guess = start_row
@@ -64,13 +62,11 @@ function onTestChange() {
           }
         }else{
           dots_h(current_typed_word.length, current_typed_word, true, start_row, start_column,offset)
-          console.log(start_row, start_column)
           if(dot_grid[row_guess].includes(dot_grid[row_guess][column_guess]) === false){
             row_guess+=1
             column_guess = find_in_row(row_guess)
           }
           if(used_dots.includes(dot_grid[row_guess][column_guess])){
-            console.log('detects')
             column_guess = find_next(row_guess, column_guess)
           }
         }
@@ -93,23 +89,20 @@ function onTestChange() {
             column_guess = find_in_row(row_guess)
           }
           if(used_dots.includes(dot_grid[row_guess][column_guess])){
-            console.log('detects')
             column_guess = find_next(row_guess, column_guess)
           }
         }else{
           dots_h(current_typed_word.length, current_typed_word, false, start_row, start_column,offset)
-          console.log(start_row, start_column)
           if(dot_grid[row_guess].includes(dot_grid[row_guess][column_guess]) === false){
             row_guess+=1
             column_guess = find_in_row(row_guess)
           }
           if(used_dots.includes(dot_grid[row_guess][column_guess])){
-            console.log('detects')
             column_guess = find_next(row_guess, column_guess)
           }
         }
         
-        start_column = column_guess+1
+        start_column = column_guess
         start_row = row_guess
         return false;
       }else if(word_check(current_typed_word)===null){
@@ -119,14 +112,10 @@ function onTestChange() {
           if(count===0){
             column_guess = dot_grid[row_guess].indexOf(typed_dots[count])
           }
-          if(used_dots.includes(typed_dots[count])){
-            // used_dots.slice(used_dots.indexOf(typed_dots[count]))
-          }
           console.log(typed_dots)
           document.getElementById(typed_dots[count]).innerHTML = ''
           document.getElementById(typed_dots[count]).style.backgroundColor = 'transparent'
         }
-       
       }
       
       
@@ -162,8 +151,8 @@ function onTestChange() {
             column_guess = start_column
             vertical = true
           
-            document.getElementById(dot_grid[row_guess][column_guess-1]).style.backgroundColor='transparent'
-            document.getElementById(dot_grid[row_guess][column_guess-1]).innerHTML=''
+            document.getElementById(dot_grid[row_guess][column_guess]).style.backgroundColor='transparent'
+            document.getElementById(dot_grid[row_guess][column_guess]).innerHTML=''
             for(let tick = 1; tick<typed_dots.length;tick++){
               current_dot = dot_grid[row_guess][column_guess]
               document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
@@ -275,7 +264,6 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
         document.getElementById(current_dots[draw_column]).style.backgroundColor = color
         document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
         document.getElementById(current_dots[draw_column]).style.color = 'white'
-        document.getElementById(current_dots[draw_column]).style.left = String(dot_grid[row].indexOf(current_dots[draw_column]) * 33) +'px'
         continue
       }
 
@@ -283,8 +271,8 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
       document.getElementById(current_dots[draw_column]).style.backgroundColor = 'transparent'
 
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
+
       document.getElementById(current_dots[draw_column]).style.color = 'white'
-      document.getElementById(current_dots[draw_column]).style.left = String(dot_grid[row].indexOf(current_dots[draw_column]) * 33) +'px'
       
       used_dots.push(current_dots[draw_column])
       
@@ -298,7 +286,6 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
       document.getElementById(current_dots[draw_column]).style.color = 'white'
       document.getElementById(current_dots[draw_column]).style.backgroundColor = color
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
-
       used_dots.push(current_dots[draw_column])
       
     } 
@@ -375,6 +362,7 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
     }else{
       color='gray'
       document.getElementById(current_dots[draw_row]).style.backgroundColor = color
+      document.getElementById(current_dots[draw_row]).style.color = 'white'
       console.log(word)
       document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
 
