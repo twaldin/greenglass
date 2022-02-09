@@ -7,7 +7,7 @@ function word_check(x){
     // document.getElementById('spelling').innerHTML = ''
     // window.setTimeout(spelt_right, 400);
 
-    if(x.startsWith('s') || x.startsWith('S')){
+    if(x.startsWith('r') || x.startsWith('R')){
       return true
     }else{
       // window.setTimeout(wrong(x), 400)
