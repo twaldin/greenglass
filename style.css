@@ -1,7 +1,21 @@
-#answer{
-  background-color:white;
-  width: 100px;
-  height: 100px;
+
+@media (prefers-color-scheme: dark) {
+    html {
+      background: #363436;
+    }
+    #top{
+      background: #363436;
+    }
+    .flexcontainerm{
+      background: #363436;
+    }
+    #txt{
+      color:white;
+    }
+    .modal-content{
+      background-color:#363436;
+      
+    }
 }
 
 .flex-container {
@@ -11,6 +25,7 @@
   align-content: flex-start;
   align-items: flex-start;
   justify-content: space-between;
+  background: transparent;
 }
 
 .flex-container div:last-child {
@@ -28,6 +43,8 @@ textarea {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    
+  background: transparent;
 }
 
 #circles{
@@ -101,15 +118,15 @@ body{
 }
 
 .dot{
-  height: 50px;
-  width: 50px;
+  height: 37.5px;
+  width: 37.5px;
   border-radius: 50%;
   background-color: transparent;
   display: inline-block;
   position: absolute;
   text-align: center;
   vertical-align: top;
-  font-size: 30px;
+  font-size: 22.5px;
   font-family: district-pro, sans-serif;
   font-weight: 600;
   font-style: normal;
@@ -131,16 +148,16 @@ body{
 }
 
 .connector_h{
-  height:50px;
-  width: 50px;
+  height:37.5px;
+  width: 37.5px;
   position: absolute;
   background-color:transparent;
   border-radius: 25px;
 }
 
 .connector_v{
-  height:50px;
-  width: 50px;
+  height:37.5px;
+  width: 37.5px;
   position: absolute;
   background-color:transparent;
   border-radius: 25px;
@@ -239,4 +256,32 @@ p{
   align-items: flex-start;
   width: 100%;
   margin: auto;
+  background-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+      background: #363436;
+    }
+    #top{
+      background: #363436;
+    }
+    .flexcontainerm{
+      background: #363436;
+    }
+    #txt{
+      color:white;
+    }
+    .modal-content{
+      background-color:#363436;
+    }
+    #rules{
+      color:white;
+    }
+    p{
+      color:white;
+    }
+    #green_glass{
+      color:white;
+    }
 }

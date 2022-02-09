@@ -28,6 +28,9 @@ let offset = 0
 let typed_dots = []
 let vertical = false
 let trash = []
+let dark = false
+
+
 // window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='textarea'){e.preventDefault();return false;}}},true);
 
 function onTestChange() {
@@ -161,8 +164,8 @@ function onTestChange() {
               current_dot = dot_grid[row_guess][column_guess]
               document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
               document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor
-              document.getElementById(current_dot).style.top= String(66*row_guess)+'px'  
-              document.getElementById(current_dot).style.left= String(66*dot_grid[row_guess].indexOf(current_dot))+'px' 
+              document.getElementById(current_dot).style.top= String(49.5*row_guess)+'px'  
+              document.getElementById(current_dot).style.left= String(49.5*dot_grid[row_guess].indexOf(current_dot))+'px' 
               document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
               document.getElementById(typed_dots[tick]).innerHTML=''
               
@@ -174,9 +177,15 @@ function onTestChange() {
           }
           
           current_dot = dot_grid[row_guess][column_guess]
-          document.getElementById(current_dot).style.backgroundColor='lightgray'
-          document.getElementById(current_dot).style.left= String(66*dot_grid[row_guess].indexOf(current_dot))+'px'
-          document.getElementById(current_dot).style.top= String(66*row_guess)+'px'  
+          if(dark){
+            document.getElementById(current_dot).style.backgroundColor='#6D6E71'
+            document.getElementById(current_dot).style.color = 'black'
+          }else{
+            document.getElementById(current_dot).style.backgroundColor='#e0e1e2'
+            document.getElementById(current_dot).style.color = 'black'
+          }
+          document.getElementById(current_dot).style.left= String(49.5*dot_grid[row_guess].indexOf(current_dot))+'px'
+          document.getElementById(current_dot).style.top= String(49.5*row_guess)+'px'  
           document.getElementById(current_dot).innerHTML=letter.toUpperCase()
           typed_dots.push(current_dot)
           
@@ -288,8 +297,15 @@ function dots_h(len, word, status, row, column, offset) { //finds a dot with spa
       }
 
     }else{
-      color='gray'
-      document.getElementById(current_dots[draw_column]).style.color = 'white'
+      if(dark){
+        color='#6D6E71'
+        document.getElementById(current_dots[draw_column]).style.color = 'rgba(0, 0, 0, 0.45)'
+      }else{
+        color='#e0e1e2'
+        document.getElementById(current_dots[draw_column]).style.color = 'rgba(0, 0, 0, 0.11)'
+
+      }
+      
       document.getElementById(current_dots[draw_column]).style.backgroundColor = color
       document.getElementById(current_dots[draw_column]).innerHTML = word[draw_column].toUpperCase()
       used_dots.push(current_dots[draw_column])
@@ -368,15 +384,19 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
       }
 
     }else{
-      color='gray'
+      if(dark){
+        color='#6D6E71'
+        document.getElementById(current_dots[draw_row]).style.color = 'rgba(0, 0, 0, 0.45)'
+      }else{
+        color='#eoe1e2'
+        document.getElementById(current_dots[draw_row]).style.color = 'rgba(0, 0, 0, 0.11)'
+      }
+      
       document.getElementById(current_dots[draw_row]).style.backgroundColor = color
-      document.getElementById(current_dots[draw_row]).style.color = 'white'
-      console.log(word)
       document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
-
       used_dots.push(current_dots[draw_row])
       
-    } 
+    }
   }
 }
 
@@ -387,7 +407,7 @@ function connect_dots_v(len, row, column, color, offset){
   }
   console.log(offset)
   let new_len = parseInt(len);
-  let draw_height = ((new_len) * 63);
+  let draw_height = ((new_len) * 47.25);
   // console.log(row)
   // console.log(column)
   // console.log(stored_row[column])
@@ -395,9 +415,9 @@ function connect_dots_v(len, row, column, color, offset){
   console.log(row, column)
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String(66*dot_grid[row].indexOf(dot_grid[row][column])) + 'px'
+  document.getElementById(String(start_con)).style.left = String(49.5*dot_grid[row].indexOf(dot_grid[row][column])) + 'px'
 
-  document.getElementById(String(start_con)).style.top = String((66*row)) + 'px'
+  document.getElementById(String(start_con)).style.top = String((49.5*row)) + 'px'
 
   
   
@@ -416,7 +436,7 @@ function connect_dots_h(len, row, column, color, offset){
   }
   console.log(offset)
   let new_len = parseInt(len);
-  let draw_width = ((new_len) * 63);
+  let draw_width = ((new_len) * 47.25);
   let stored_row = con_grid_h[row]
   // console.log(row)
   // console.log(column)
@@ -425,10 +445,10 @@ function connect_dots_h(len, row, column, color, offset){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String((66*column)) + 'px'
+  document.getElementById(String(start_con)).style.left = String((49.5*column)) + 'px'
 
   
-  document.getElementById(String(start_con)).style.top = String((66*dot_grid.indexOf(dot_grid[row]))) + 'px'
+  document.getElementById(String(start_con)).style.top = String((49.5*dot_grid.indexOf(dot_grid[row]))) + 'px'
   
   draw_width = draw_width
   window.setTimeout(lengthen(draw_width, start_con), 3000)
@@ -442,6 +462,11 @@ function open_box(){
   
   document.getElementById('green_glass').style.visibility = 'hidden'
   console.log('works')
+
+  if(document.getElementById('top').style.background = '#363436'){
+    dark = true
+    console.log(dark)
+  }
 }
 
 var id = null;
