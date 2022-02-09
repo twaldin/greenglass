@@ -19,6 +19,7 @@ function word_check(x){
   }
 }
 
+let userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 let current_dot = ''
 let row_guess=0
 let column_guess = 0
@@ -463,7 +464,7 @@ function open_box(){
   document.getElementById('green_glass').style.visibility = 'hidden'
   console.log('works')
 
-  if(document.getElementById('top').style.background = '#363436'){
+  if(userPrefersDark){
     dark = true
     console.log(dark)
   }

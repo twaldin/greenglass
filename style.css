@@ -1,23 +1,4 @@
 
-@media (prefers-color-scheme: dark) {
-    html {
-      background: #363436;
-    }
-    #top{
-      background: #363436;
-    }
-    .flexcontainerm{
-      background: #363436;
-    }
-    #txt{
-      color:white;
-    }
-    .modal-content{
-      background-color:#363436;
-      
-    }
-}
-
 .flex-container {
   display: flex;
   flex-direction: row;
