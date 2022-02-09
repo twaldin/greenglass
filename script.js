@@ -110,7 +110,7 @@ function onTestChange() {
         return false;
       }else if(word_check(current_typed_word)===null){
         document.getElementById("txt").value = ''
-        document.getElementById("txt").placeholder = 'Not in Word List, Guess Again...'
+        document.getElementById("txt").placeholder = 'Invalid Word'
         for(let count=0; count<typed_dots.length;count++){
           if(count===0){
             column_guess = dot_grid[row_guess].indexOf(typed_dots[count])
@@ -161,8 +161,8 @@ function onTestChange() {
               current_dot = dot_grid[row_guess][column_guess]
               document.getElementById(current_dot).innerHTML =  document.getElementById(typed_dots[tick]).innerHTML
               document.getElementById(current_dot).style.backgroundColor = document.getElementById(typed_dots[tick]).style.backgroundColor
-              document.getElementById(current_dot).style.top= String(33*row_guess)+'px'  
-              document.getElementById(current_dot).style.left= String(33*dot_grid[row_guess].indexOf(current_dot))+'px' 
+              document.getElementById(current_dot).style.top= String(66*row_guess)+'px'  
+              document.getElementById(current_dot).style.left= String(66*dot_grid[row_guess].indexOf(current_dot))+'px' 
               document.getElementById(typed_dots[tick]).style.backgroundColor='transparent'
               document.getElementById(typed_dots[tick]).innerHTML=''
               
@@ -175,8 +175,8 @@ function onTestChange() {
           
           current_dot = dot_grid[row_guess][column_guess]
           document.getElementById(current_dot).style.backgroundColor='lightgray'
-          document.getElementById(current_dot).style.left= String(33*dot_grid[row_guess].indexOf(current_dot))+'px'
-          document.getElementById(current_dot).style.top= String(33*row_guess)+'px'  
+          document.getElementById(current_dot).style.left= String(66*dot_grid[row_guess].indexOf(current_dot))+'px'
+          document.getElementById(current_dot).style.top= String(66*row_guess)+'px'  
           document.getElementById(current_dot).innerHTML=letter.toUpperCase()
           typed_dots.push(current_dot)
           
@@ -349,7 +349,7 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
         document.getElementById(current_dots[draw_row]).innerHTML = word[draw_row].toUpperCase()
         document.getElementById(current_dots[draw_row]).style.color = 'white'
       
-        used_dots.push(current_dots[draw_column])
+        used_dots.push(current_dots[draw_row])
        
         continue
       }
@@ -381,24 +381,23 @@ function dots_v(len, word, status, row, column, offset) { //finds a dot with spa
 }
 
 function connect_dots_v(len, row, column, color, offset){
-  console.log(len)
   if(len === 1){
     document.getElementById(dot_grid[row][column]).style.backgroundColor=color
     console.log(dot_grid[row][column])
   }
   console.log(offset)
   let new_len = parseInt(len);
-  let draw_height = ((new_len) * 31);
+  let draw_height = ((new_len) * 63);
   // console.log(row)
   // console.log(column)
   // console.log(stored_row[column])
   let start_con = con_grid_v[row][column]
-
+  console.log(row, column)
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String(33*dot_grid[row].indexOf(dot_grid[row][column])) + 'px'
+  document.getElementById(String(start_con)).style.left = String(66*dot_grid[row].indexOf(dot_grid[row][column])) + 'px'
 
-  document.getElementById(String(start_con)).style.top = String((33*row)) + 'px'
+  document.getElementById(String(start_con)).style.top = String((66*row)) + 'px'
 
   
   
@@ -417,7 +416,7 @@ function connect_dots_h(len, row, column, color, offset){
   }
   console.log(offset)
   let new_len = parseInt(len);
-  let draw_width = ((new_len) * 31);
+  let draw_width = ((new_len) * 63);
   let stored_row = con_grid_h[row]
   // console.log(row)
   // console.log(column)
@@ -426,10 +425,10 @@ function connect_dots_h(len, row, column, color, offset){
 
   document.getElementById(String(start_con)).style.backgroundColor = color
   
-  document.getElementById(String(start_con)).style.left = String((33*column)) + 'px'
+  document.getElementById(String(start_con)).style.left = String((66*column)) + 'px'
 
   
-  document.getElementById(String(start_con)).style.top = String((33*dot_grid.indexOf(dot_grid[row]))) + 'px'
+  document.getElementById(String(start_con)).style.top = String((66*dot_grid.indexOf(dot_grid[row]))) + 'px'
   
   draw_width = draw_width
   window.setTimeout(lengthen(draw_width, start_con), 3000)
@@ -440,6 +439,8 @@ function connect_dots_h(len, row, column, color, offset){
 
 function open_box(){
   document.getElementById('txt').style.visibility = 'visible'
+  
+  document.getElementById('green_glass').style.visibility = 'hidden'
   console.log('works')
 }
 
@@ -492,14 +493,14 @@ var con_grid_h = [
 ];
 
 var con_grid_v = [
-  ['a1c', 'a2c', 'a3c', 'a4c', 'a5c','a6c', 'a7c', 'a8c', 'a9c'], //r1
-  ['b1c', 'b2c', 'b3c', 'b4c', 'b5c','b6c', 'b7c', 'b8c', 'b9c'], //r2
-  ['c1c', 'c2c', 'c3c', 'c4c', 'c5c','c6c', 'c7c', 'c8c', 'c9c'], //r3
-  ['d1c', 'd2c', 'd3c', 'd4c', 'd5c','d6c', 'd7c', 'd8c', 'd9c'], //r4
-  ['e1c', 'e2c', 'e3c', 'e4c', 'e5c','e6c', 'e7c', 'e8c', 'e9c'], //r5
-  ['f1c', 'f2c', 'f3c', 'f4c', 'f5c','f6c', 'f7c', 'f8c', 'f9c'], //r6
-  ['g1c', 'g2c', 'g3c', 'g4c', 'g5c','g6c', 'g7c', 'g8c', 'g9c'], //r7
-  ['h1c', 'h2c', 'h3c', 'h4c', 'h5c','h6c', 'h7c', 'h8c', 'h9c'] //r8
+  ['a1v', 'a2v', 'a3v', 'a4v', 'a5v','a6v', 'a7v', 'a8v', 'a9v'], //r1
+  ['b1v', 'b2v', 'b3v', 'b4v', 'b5v','b6v', 'b7v', 'b8v', 'b9v'], //r2
+  ['c1v', 'c2v', 'c3v', 'c4v', 'c5v','c6v', 'c7v', 'c8v', 'c9v'], //r3
+  ['d1v', 'd2v', 'd3v', 'd4v', 'd5v','d6v', 'd7v', 'd8v', 'd9v'], //r4
+  ['e1v', 'e2v', 'e3v', 'e4v', 'e5v','e6v', 'e7v', 'e8v', 'e9v'], //r5
+  ['f1v', 'f2v', 'f3v', 'f4v', 'f5v','f6v', 'f7v', 'f8v', 'f9v'], //r6
+  ['g1v', 'g2v', 'g3v', 'g4v', 'g5v','g6v', 'g7v', 'g8v', 'g9v'], //r7
+  ['h1v', 'h2v', 'h3v', 'h4v', 'h5v','h6v', 'h7v', 'h8v', 'h9v'] //r8
 ];
 
 
@@ -514,3 +515,29 @@ var dot_grid = [
   ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8', 'h9'], //r8
   ['i1', 'i2', 'i3', 'i4', 'i5', 'i6', 'i7', 'i8', 'i9'] //r9
 ];
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}

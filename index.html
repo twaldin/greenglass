@@ -13,11 +13,28 @@
 
   </head>
   <body>
-    <div id="top">
+    <div class='flex-containerm'>
+    <div id="top" class = 'flex-container'>
       <div id="green_glass" onclick="open_box(); ">green glass</div>
       <textarea maxlength='9' id="txt" placeholder='Guess Here...' onkeydown="onTestChange();"></textarea>
-      <div id='points'></div>
+      <div id='circles'>
+        <div id='points'></div>
+        <button id="myBtn">?</button>
+      </div>
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id='rules'>Rules</p>
+          <p>Begin by entering a word that follows a rule the clue might follow (If the clue word is "green", you could guess "glass").  </p>
+          <p>If the word follows the same rule, the word will appear green. If it does not follow the rule, it will appear gray. </p>
+          
+          <p>Get 3 Words correct to win or lose if you run out of space in the 9 by 9 letter grid!</p>
+
+        </div>
+      </div>
     </div>
+
+    
     
     
     <div id ="spelling"></div>
@@ -26,7 +43,7 @@
     <div id ="answer"></div>
     <div id ="space"></div>
 
-    <div id='solution'>
+    <div id='solution' class = >
       <!-- <div class='row'> -->
         <span class="connector_h" id="a1c"></span>
         <span class="connector_h" id="a2c"></span>
@@ -289,7 +306,7 @@
 
       <!-- </div> -->
     </div>
-     
+    </div>
 
     <script src="script.js"></script>
     <script src="typo.js"></script>

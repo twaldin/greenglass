@@ -4,8 +4,17 @@
   height: 100px;
 }
 
-#top{
-  position: relative;
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.flex-container div:last-child {
+  margin-left: auto;
 }
 
 #green_glass:hover{
@@ -16,10 +25,17 @@ textarea {
     border: none;
     overflow: hidden;
     outline: none;
-    position: absolute;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+}
+
+#circles{
+  width: auto;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
+  display: inline-block
 }
 
 textarea:focus, input:focus{
@@ -31,57 +47,69 @@ body{
 }
 #top{
   width:100%;
-  height: 100px;
+  height: 100%;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: center;
 }
+
 
 #points{
   height: 50px;
   width: 50px;
   border-radius: 50%;
   background-color: #54b948;
-  display: inline-block;
-  position: absolute;
-  text-align: center;
-  vertical-align: top;
-  bottom: 25px;
-  right:0px;
   font-family: district-pro, sans-serif;
+  text-align: center;
   font-weight: 600;
-  font-style: normal;
   color: white;
   font-size:36px;
+  border-color: transparent;
+  float: right;
+  margin: 10px;
+  /* order: 0;
+  flex: 0 1 auto;
+  align-self: auto; */
+  
+  
 }
 
 #txt{
   visibility:hidden;
   position: absolute;
-  width: 750px;
+  width: auto;
   height: 75px;
   resize: none;
-  font-size: 50px;
+  background-color: transparent;
+  font-size: 300%;
   font-family: district-pro, sans-serif;
   font-weight: 600;
   font-style: normal;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
 }
 
 #green_glass{
-  position: absolute;
-  font-size: 50px;
+  font-size: 300%;
   font-family: district-pro, sans-serif;
   font-weight: 600;
   font-style: normal;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
 }
 
 .dot{
-  height: 25px;
-  width: 25px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   background-color: transparent;
   display: inline-block;
   position: absolute;
   text-align: center;
   vertical-align: top;
-  font-size: 16px;
+  font-size: 30px;
   font-family: district-pro, sans-serif;
   font-weight: 600;
   font-style: normal;
@@ -103,28 +131,112 @@ body{
 }
 
 .connector_h{
-  height:25px;
-  width: 25px;
+  height:50px;
+  width: 50px;
   position: absolute;
   background-color:transparent;
-  top: 2.5px;
-  left: 15px;
-  border-radius: 12.5px;
+  border-radius: 25px;
 }
 
 .connector_v{
-  height:25px;
-  width: 25px;
+  height:50px;
+  width: 50px;
   position: absolute;
   background-color:transparent;
-  top: 0px;
-  left: 0px;
-  border-radius: 12.5px;
+  border-radius: 25px;
 }
 
 #solution{
   position: relative;
-  width: 303px;
+  width: 100%;
   height: 100%;
-  margin-top: 10px;
+  order: 0;
+  flex: 0 1 auto;
+  align-self: center;
+  
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#myBtn{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: gray;
+  font-family: district-pro, sans-serif;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  font-size: 190%;
+  border-color: transparent;
+  float: right;
+  margin: 10px;
+  /* order: 0;
+  flex: 0 1 auto;
+  align-self: auto; */
+}
+
+p{
+  font-family: district-pro, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: black;
+  font-size:20px;
+  border-color: transparent;
+}
+
+#rules{
+  
+  font-family: district-pro, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  color: black;
+  font-size:36px;
+  border-color: transparent;
+}
+
+.flex-containerm {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin: auto;
 }
